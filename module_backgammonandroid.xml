@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_backgammonandroid" default="compile.module.backgammonandroid">
+  <dirname property="module.backgammonandroid.basedir" file="${ant.file.module_backgammonandroid}"/>
+  
+  <property name="module.jdk.home.backgammonandroid" value="${jdk.home.android_2.3_platform}"/>
+  <property name="module.jdk.bin.backgammonandroid" value="${jdk.bin.android_2.3_platform}"/>
+  <property name="module.jdk.classpath.backgammonandroid" value="jdk.classpath.android_2.3_platform"/>
+  
+  <property name="compiler.args.backgammonandroid" value="${compiler.args}"/>
+  
+  <property name="backgammonandroid.output.dir" value="${module.backgammonandroid.basedir}/out/production/BackgammonAndroid"/>
+  <property name="backgammonandroid.testoutput.dir" value="${module.backgammonandroid.basedir}/out/test/BackgammonAndroid"/>
+  
+  <path id="backgammonandroid.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="backgammonandroid.module.production.classpath">
+    <path refid="${module.jdk.classpath.backgammonandroid}"/>
+  </path>
+  
+  <path id="backgammonandroid.runtime.production.module.classpath">
+    <pathelement location="${backgammonandroid.output.dir}"/>
+  </path>
+  
+  <path id="backgammonandroid.module.classpath">
+    <path refid="${module.jdk.classpath.backgammonandroid}"/>
+    <pathelement location="${backgammonandroid.output.dir}"/>
+  </path>
+  
+  <path id="backgammonandroid.runtime.module.classpath">
+    <pathelement location="${backgammonandroid.testoutput.dir}"/>
+    <pathelement location="${backgammonandroid.output.dir}"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.backgammonandroid">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.backgammonandroid">
+    <patternset refid="excluded.from.module.backgammonandroid"/>
+  </patternset>
+  
+  <path id="backgammonandroid.module.sourcepath">
+    <dirset dir="${module.backgammonandroid.basedir}">
+      <include name="src"/>
+      <include name="gen"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.backgammonandroid" depends="compile.module.backgammonandroid.production,compile.module.backgammonandroid.tests" description="Compile module BackgammonAndroid"/>
+  
+  <target name="compile.module.backgammonandroid.production" depends="register.custom.compilers" description="Compile module BackgammonAndroid; production classes">
+    <mkdir dir="${backgammonandroid.output.dir}"/>
+    <javac2 destdir="${backgammonandroid.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.backgammonandroid}/javac">
+      <compilerarg line="${compiler.args.backgammonandroid}"/>
+      <bootclasspath refid="backgammonandroid.module.bootclasspath"/>
+      <classpath refid="backgammonandroid.module.production.classpath"/>
+      <src refid="backgammonandroid.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.backgammonandroid"/>
+    </javac2>
+    
+    <copy todir="${backgammonandroid.output.dir}">
+      <fileset dir="${module.backgammonandroid.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.backgammonandroid.basedir}/gen">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.backgammonandroid.tests" depends="register.custom.compilers,compile.module.backgammonandroid.production" description="compile module BackgammonAndroid; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.backgammonandroid" description="cleanup module">
+    <delete dir="${backgammonandroid.output.dir}"/>
+    <delete dir="${backgammonandroid.testoutput.dir}"/>
+  </target>
+</project>
