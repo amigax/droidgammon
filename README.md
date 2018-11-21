@@ -5,3 +5,5 @@ Please note this is a quick and dirty Android port of my backgammon game ( origi
 Also if anyone gets it going in say Android Studio, it would be good to get a repos up of that too.
 
 Note the code in androidspecifics/ is for the android platform, the other code in gamelogic/ and lowlevel/ is pure java and not platform specific. Enjoy.
+
+Developed by Gareth Murfin (Android freelancer) www.garethmurfin.co.uk
